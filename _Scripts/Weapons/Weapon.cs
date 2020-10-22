@@ -25,6 +25,11 @@ public class Weapon : MonoBehaviour
 
     public bool AmmoFull { get => Ammo >= weaponData.AmmoCapacity; }
 
+    protected bool isShooting = false;
+
+    [SerializeField]
+    protected bool reloadCoroutine = false;
+
     [field: SerializeField]
     public UnityEvent OnShoot { get; set; }
 
@@ -36,13 +41,66 @@ public class Weapon : MonoBehaviour
         Ammo = weaponData.AmmoCapacity;
     }
 
-    public void Shoot()
+    public void TryShooting()
     {
-        Debug.Log("Shooting");
+        isShooting = true;
     }
     public void StopShooting()
     {
-        Debug.Log("Stop shooting");
+        isShooting = false;
     }
 
+    public void Reload(int ammo)
+    {
+        Ammo += ammo;
+    }
+
+    private void Update()
+    {
+        UseWeapon();
+    }
+
+    private void UseWeapon()
+    {
+        if(isShooting && reloadCoroutine == false)
+        {
+            if (Ammo > 0)
+            {
+                Ammo--;
+                OnShoot?.Invoke();
+                for (int i = 0; i < weaponData.GetBulletCountToSpawn(); i++)
+                {
+                    ShootBullet();
+                }
+            }
+            else
+            {
+                isShooting = false;
+                OnShootNoAmmo?.Invoke();
+                return;
+            }
+            FinishShooting();
+        }
+    }
+
+    private void FinishShooting()
+    {
+        StartCoroutine(DelayNextShootCoroutine());
+        if (weaponData.AutomaticFire == false) 
+        {
+            isShooting = false;
+        }
+    }
+
+    protected IEnumerator DelayNextShootCoroutine()
+    {
+        reloadCoroutine = true;
+        yield return new WaitForSeconds(weaponData.WeaponDelay);
+        reloadCoroutine = false;
+    }
+
+    private void ShootBullet()
+    {
+        Debug.Log("Shooting a bullet");
+    }
 }
