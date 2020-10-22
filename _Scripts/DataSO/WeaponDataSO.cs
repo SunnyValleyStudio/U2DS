@@ -6,12 +6,33 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Weapons/WeaponData")]
 public class WeaponDataSO : ScriptableObject
 {
-    public int AmmoCapacity { get; internal set; }
-    public bool AutomaticFire { get; internal set; }
-    public float WeaponDelay { get; internal set; }
+    [field: SerializeField]
+    [field: Range(0,100)]
+    public int AmmoCapacity { get; set; } = 100;
+
+    [field: SerializeField]
+    public bool AutomaticFire { get; set; } = false;
+
+    [field: SerializeField]
+    [field: Range(0.1f, 2f)]
+    public float WeaponDelay { get; set; } = .1f;
+
+    [field: SerializeField]
+    [field: Range(0, 10)]
+    public float SpreadAngle { get; set; } = 5;
+
+    [SerializeField]
+    private bool multiBulletShoot = false;
+    [SerializeField]
+    [Range(1,10)]
+    private int bulletCount = 1;
 
     internal int GetBulletCountToSpawn()
     {
-        throw new NotImplementedException();
+        if (multiBulletShoot)
+        {
+            return bulletCount;
+        }
+        return 1;
     }
 }
