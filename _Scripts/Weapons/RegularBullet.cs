@@ -24,4 +24,18 @@ public class RegularBullet : Bullet
             rigidBody2d.MovePosition(transform.position + BulletData.BulletSpeed * transform.right * Time.fixedDeltaTime);
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
+        {
+            HitObstacle();
+        }
+        Destroy(gameObject);
+    }
+
+    private void HitObstacle()
+    {
+        Debug.Log("Hitting obstacle");
+    }
 }
