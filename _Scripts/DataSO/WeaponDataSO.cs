@@ -7,6 +7,9 @@ using UnityEngine;
 public class WeaponDataSO : ScriptableObject
 {
     [field: SerializeField]
+    public BulletDataSO BulletData { get; set; }
+
+    [field: SerializeField]
     [field: Range(0,100)]
     public int AmmoCapacity { get; set; } = 100;
 
