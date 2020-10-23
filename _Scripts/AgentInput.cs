@@ -23,6 +23,9 @@ public class AgentInput : MonoBehaviour
     [field: SerializeField]
     public UnityEvent OnFireButtonReleased { get; set; }
 
+    [SerializeField]
+    public UnityEvent OnFireButtonReleasedNew;
+
     private void Awake()
     {
         mainCamera = Camera.main;
