@@ -27,6 +27,9 @@ public class RegularBullet : Bullet
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        var hittable = collision.GetComponent<IHittable>();
+        hittable?.GetHit(bulletData.Damage, gameObject);
+
         if(collision.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
         {
             HitObstacle();
