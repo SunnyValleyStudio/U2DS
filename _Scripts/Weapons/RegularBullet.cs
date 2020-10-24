@@ -30,8 +30,16 @@ public class RegularBullet : Bullet
         if(collision.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
         {
             HitObstacle();
+        }else if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        {
+            HitEnemy();
         }
         Destroy(gameObject);
+    }
+
+    private void HitEnemy()
+    {
+        Debug.Log("Hitting enemy");
     }
 
     private void HitObstacle()
