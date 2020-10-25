@@ -14,6 +14,9 @@ public class Enemy : MonoBehaviour, IHittable
     [field: SerializeField]
     public UnityEvent OnGetHit { get; set; }
 
+    [field: SerializeField]
+    public UnityEvent OnDie { get; set; }
+
     private void Start()
     {
         Health = EnemyData.MaxHealth;
@@ -25,7 +28,14 @@ public class Enemy : MonoBehaviour, IHittable
         OnGetHit?.Invoke();
         if(Health<= 0)
         {
-            Destroy(gameObject);
+            OnDie?.Invoke();
+            StartCoroutine(WaitToDie());
         }
+    }
+
+    IEnumerator WaitToDie()
+    {
+        yield return new WaitForSeconds(.54f);
+        Destroy(gameObject);
     }
 }
