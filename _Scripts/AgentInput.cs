@@ -4,12 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class AgentInput : MonoBehaviour
+public class AgentInput : MonoBehaviour, IAgentInput
 {
     private Camera mainCamera;
     private bool fireButtonDown = false;
-
-
 
     [field: SerializeField]
     public UnityEvent<Vector2> OnMovementKeyPressed { get; set; }
@@ -22,9 +20,6 @@ public class AgentInput : MonoBehaviour
 
     [field: SerializeField]
     public UnityEvent OnFireButtonReleased { get; set; }
-
-    [SerializeField]
-    public UnityEvent OnFireButtonReleasedNew;
 
     private void Awake()
     {
@@ -39,23 +34,23 @@ public class AgentInput : MonoBehaviour
 
     private void GetFireInput()
     {
-        if (Input.GetAxisRaw("Fire1")>0)
+        if (Input.GetAxisRaw("Fire1") > 0)
         {
             if (fireButtonDown == false)
             {
                 fireButtonDown = true;
                 OnFireButtonPressed?.Invoke();
             }
-            
+
         }
         else
         {
-            if(fireButtonDown == true)
+            if (fireButtonDown == true)
             {
                 fireButtonDown = false;
                 OnFireButtonReleased?.Invoke();
             }
-            
+
         }
     }
 

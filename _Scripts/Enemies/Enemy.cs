@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Enemy : MonoBehaviour, IHittable
+public class Enemy : MonoBehaviour, IHittable, IAgent
 {
     [field: SerializeField]
     public EnemyDataSO EnemyData { get; set; }
@@ -26,7 +26,7 @@ public class Enemy : MonoBehaviour, IHittable
     {
         Health--;
         OnGetHit?.Invoke();
-        if(Health<= 0)
+        if (Health <= 0)
         {
             OnDie?.Invoke();
             StartCoroutine(WaitToDie());
