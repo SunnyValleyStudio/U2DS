@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class AIDecision : MonoBehaviour
+public abstract class AIAction : MonoBehaviour
 {
     protected AIActionData aiActionData;
     protected AIMovementData aiMovementData;
@@ -15,5 +15,5 @@ public abstract class AIDecision : MonoBehaviour
         enemyBrain = transform.root.GetComponent<EnemyAIBrain>();
     }
 
-    public abstract bool MakeADecision();
+    public abstract void TakeAction();
 }

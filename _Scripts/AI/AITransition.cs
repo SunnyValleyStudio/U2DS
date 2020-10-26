@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class AITransition : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [field: SerializeField]
+    public List<AIDecision> Decisions { get; set; }
+    [field: SerializeField]
+    public AIState PositiveResult { get; set; }
+    [field: SerializeField]
+    public AIState NegativeResult { get; set; }
 }

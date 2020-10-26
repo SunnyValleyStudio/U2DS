@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -21,5 +22,10 @@ public class EnemyAIBrain : MonoBehaviour, IAgentInput
     private void Awake()
     {
         Target = FindObjectOfType<Player>().gameObject;
+    }
+
+    internal void ChangeToState(AIState positiveResult)
+    {
+        throw new NotImplementedException();
     }
 }
