@@ -59,7 +59,7 @@ public class Enemy : MonoBehaviour, IHittable, IAgent
 
     public void PerformAttack()
     {
-        if (dead)
+        if (dead == false)
         {
             enemyAttack.Attack(EnemyData.Damage);
         }
