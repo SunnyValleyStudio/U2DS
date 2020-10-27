@@ -10,4 +10,10 @@ public class AITransition : MonoBehaviour
     public AIState PositiveResult { get; set; }
     [field: SerializeField]
     public AIState NegativeResult { get; set; }
+
+    private void Awake()
+    {
+        Decisions.Clear();
+        Decisions = new List<AIDecision>(GetComponents<AIDecision>());
+    }
 }
