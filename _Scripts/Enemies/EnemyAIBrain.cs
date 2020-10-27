@@ -10,6 +10,9 @@ public class EnemyAIBrain : MonoBehaviour, IAgentInput
     public GameObject Target { get; set; }
 
     [field: SerializeField]
+    public AIState CurrentState { get; private set; }
+
+    [field: SerializeField]
     public UnityEvent OnFireButtonPressed { get; set; }
     [field: SerializeField]
     public UnityEvent OnFireButtonReleased { get; set; }
@@ -24,8 +27,28 @@ public class EnemyAIBrain : MonoBehaviour, IAgentInput
         Target = FindObjectOfType<Player>().gameObject;
     }
 
-    internal void ChangeToState(AIState positiveResult)
+    private void Update()
     {
-        throw new NotImplementedException();
+        if (Target == null)
+        {
+            OnMovementKeyPressed?.Invoke(Vector2.zero);
+        }
+        CurrentState.UpdateState();
+    }
+
+    public void Attack()
+    {
+        OnFireButtonPressed?.Invoke();
+    }
+
+    public void Move(Vector2 movementDirection, Vector2 targetPosition)
+    {
+        OnMovementKeyPressed?.Invoke(movementDirection);
+        OnPointerPositionChange?.Invoke(targetPosition);
+    }
+
+    internal void ChangeToState(AIState state)
+    {
+        CurrentState = state;
     }
 }
