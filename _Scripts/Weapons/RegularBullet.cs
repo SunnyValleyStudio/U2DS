@@ -32,21 +32,26 @@ public class RegularBullet : Bullet
 
         if(collision.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
         {
-            HitObstacle();
+            HitObstacle(collision);
         }else if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            HitEnemy();
+            HitEnemy(collision);
         }
         Destroy(gameObject);
     }
 
-    private void HitEnemy()
+    private void HitEnemy(Collider2D collision)
     {
-        Debug.Log("Hitting enemy");
+        Vector2 randomOffset = Random.insideUnitCircle * 0.5f;
+        Instantiate(BulletData.ImpactEnemyPrefab, collision.transform.position + (Vector3)randomOffset, Quaternion.identity);
     }
 
-    private void HitObstacle()
+    private void HitObstacle(Collider2D collision)
     {
-        Debug.Log("Hitting obstacle");
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right);
+        if (hit.collider != null)
+        {
+            Instantiate(BulletData.ImpactObstaclePrefab, hit.point, Quaternion.identity);
+        }
     }
 }
