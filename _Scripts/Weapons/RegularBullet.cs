@@ -29,7 +29,6 @@ public class RegularBullet : Bullet
     {
         var hittable = collision.GetComponent<IHittable>();
         hittable?.GetHit(bulletData.Damage, gameObject);
-
         if(collision.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
         {
             HitObstacle(collision);
