@@ -49,4 +49,10 @@ public class AgentMovement : MonoBehaviour
         OnVelocityChange?.Invoke(currentVelocity);
         rigidbody2d.velocity = currentVelocity*movementDirection.normalized;
     }
+
+    public void StopImmediatelly()
+    {
+        currentVelocity = 0;
+        rigidbody2d.velocity = Vector2.zero;
+    }
 }
