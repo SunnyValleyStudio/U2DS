@@ -5,6 +5,7 @@ using UnityEngine;
 public class RegularBullet : Bullet
 {
     protected Rigidbody2D rigidBody2d;
+    private bool isDead = false;
 
     public override BulletDataSO BulletData 
     { 
@@ -27,6 +28,9 @@ public class RegularBullet : Bullet
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (isDead)
+            return;
+        isDead = true;
         var hittable = collision.GetComponent<IHittable>();
         hittable?.GetHit(bulletData.Damage, gameObject);
         if(collision.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
