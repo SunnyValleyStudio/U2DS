@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Enemy : MonoBehaviour, IHittable, IAgent
+public class Enemy : MonoBehaviour, IHittable, IAgent, IKnockBack
 {
     [field: SerializeField]
     public EnemyDataSO EnemyData { get; set; }
@@ -15,6 +15,8 @@ public class Enemy : MonoBehaviour, IHittable, IAgent
     public EnemyAttack enemyAttack { get; set; }
 
     private bool dead = false;
+
+    private AgentMovement agentMovemenet;
 
     [field: SerializeField]
     public UnityEvent OnGetHit { get; set; }
@@ -28,6 +30,7 @@ public class Enemy : MonoBehaviour, IHittable, IAgent
         {
             enemyAttack = GetComponent<EnemyAttack>();
         }
+        agentMovemenet = GetComponent<AgentMovement>();
     }
     private void Start()
     {
@@ -61,5 +64,10 @@ public class Enemy : MonoBehaviour, IHittable, IAgent
         {
             enemyAttack.Attack(EnemyData.Damage);
         }
+    }
+
+    public void KnockBack(Vector2 direction, float power, float duration)
+    {
+        agentMovemenet.KnockBack(direction, power, duration);
     }
 }
