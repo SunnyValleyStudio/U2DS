@@ -23,7 +23,7 @@ public class ObjectPool : MonoBehaviour
 
         GameObject spawnedObject = null;
 
-        if(currentSize < poolSize)
+        if (currentSize < poolSize)
         {
             spawnedObject = Instantiate(currentObject, transform.position, Quaternion.identity);
             spawnedObject.name = currentObject.name + "_" + currentSize;
