@@ -34,11 +34,11 @@ public class UIHealth : MonoBehaviour
         {
             if(currentIndex >= health)
             {
-                hearts[i].sprite = heartFull;
+                hearts[i].sprite = heartEmpty;
             }
             else
             {
-                hearts[i].sprite = heartEmpty;
+                hearts[i].sprite = heartFull;
             }
             currentIndex++;
         }
