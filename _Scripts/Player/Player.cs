@@ -20,6 +20,8 @@ public class Player : MonoBehaviour, IAgent, IHittable
 
     private bool dead = false;
 
+    private PlayerWeapon playeWeapon;
+
     [field: SerializeField]
     public UIHealth uiHealth { get; set; }
 
@@ -28,6 +30,10 @@ public class Player : MonoBehaviour, IAgent, IHittable
     [field: SerializeField]
     public UnityEvent OnGetHit { get; set; }
 
+    private void Awake()
+    {
+        playeWeapon = GetComponentInChildren<PlayerWeapon>();
+    }
     private void Start()
     {
         Health = maxHealth;
@@ -48,6 +54,38 @@ public class Player : MonoBehaviour, IAgent, IHittable
         }
         
         
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.layer == LayerMask.NameToLayer("Resource"))
+        {
+            var resource = collision.gameObject.GetComponent<Resource>();
+            if (resource != null)
+            {
+                switch (resource.ResourceData.ResourceType)
+                {
+                    case ResourceTypeEnum.Health:
+                        if(Health >= maxHealth)
+                        {
+                            return;
+                        }
+                        Health += resource.ResourceData.GetAmount();
+                        resource.PickUpResource();
+                        break;
+                    case ResourceTypeEnum.Ammo:
+                        if (playeWeapon.AmmoFull)
+                        {
+                            return;
+                        }
+                        playeWeapon.AddAmmo(resource.ResourceData.GetAmount());
+                        resource.PickUpResource();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
     }
 
 }
